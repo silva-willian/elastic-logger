@@ -1,4 +1,4 @@
-#Elastic Logger 
+## Elastic Logger 
 Solution created for segregation of logs for the elasticsearch in python
 
 ## Setup environment

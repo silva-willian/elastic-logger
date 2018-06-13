@@ -1,7 +1,7 @@
 from datetime import datetime
 import logging
 import uuid
-from elastic import Elastic
+from elasticlogger.elastic import Elastic
 import os
 from dotenv import load_dotenv
 import jsonpickle
@@ -23,7 +23,7 @@ class Logger():
     def base_init(self):
         index_name = os.getenv("elastic_logger_index_name")
 
-        if(not index_name):
+        if (not index_name):
             index_name = "elastic-logger"
 
         index_name_day = index_name + '-' + '{0:%Y-%m-%d}'.format(datetime.now())
@@ -65,12 +65,12 @@ class Logger():
     def error(self, message, *args):
         self.logger(logging.ERROR, message, args)
 
-    def logger(self, level, message, args):
+    def logger(self, level, message, args=""):
+        args_message = ''
 
         if (args):
-            args = " - args:[ " + jsonpickle.encode(args) + " ]"
-        else:
-            args = ""
+            args = jsonpickle.encode(args)
+            args_message = " - args:[ " + args + " ]"
 
-        self.log.log(level, self.id + ' - ' + message + args)
+        self.log.log(level, self.id + ' - ' + message + args_message)
         self.elastic.asyncPost(logging.getLevelName(level), message, args)

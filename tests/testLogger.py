@@ -1,6 +1,6 @@
 import unittest
 import uuid
-from logger import Logger
+from elasticlogger.logger import Logger
 import os
 from dotenv import load_dotenv
 from datetime import datetime
@@ -64,10 +64,10 @@ class TestLogger(unittest.TestCase):
         logger.warning("Warning Message with Object", list)
         logger.error("Simple error message")
         logger.error("Error Message with Object", list)
-        logger.critical("Simple critical message")
+        logger.critical("Simple criticasl message")
         logger.critical("Critical Message with Object", list)
 
-        time.sleep(10)
+        time.sleep(15)
         value = self.get_logger(id)
         self.assertIsNotNone(value)
         self.assertIsNotNone(value["hits"])

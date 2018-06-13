@@ -49,4 +49,4 @@ class Elastic():
             print("An exception occurred [" + es.args + " ]")
 
     def asyncPost(self, severity, message, args):
-        threading.Thread(target=self.post(severity, message, args)).start()
+        threading.Thread(target=self.post, args=(severity, message, args)).start()
