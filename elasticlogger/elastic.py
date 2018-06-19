@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import jsonpickle
 from elasticsearch import Elasticsearch
 import threading
 import os
@@ -45,8 +46,10 @@ class Elastic():
                 body["args"] = args
 
             self.es.index(index=self.index_name_day, doc_type="logs", body=body)
-        except Exception as es:
-            print("An exception occurred [" + es.args + " ]")
+        except Exception as e:
+            print("Elasticsearch unavaliable")
+            print("An exception occurred [" + jsonpickle.encode(e) + " ]")
+            pass
 
     def asyncPost(self, severity, message, args):
         threading.Thread(target=self.post, args=(severity, message, args)).start()

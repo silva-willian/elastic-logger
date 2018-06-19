@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='Elastic logger',
-    version='1.0.0',
+    version='1.0.1',
     author='Willian da Silva',
     author_email='silva.willian@outlook.com',
     description='Solution created for segregation of logs for the elasticsearch in python',
