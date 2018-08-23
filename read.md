@@ -59,26 +59,27 @@ logger.critical("Critical Message with Object", list)
 ## Configuring the environment variables
 ```
 # configure the elasticsearch host through the elastic_logger_host environment variable
-elastic_logger_host="http://localhost:9200"
+elkHost="http://localhost:9200"
 
 # configure the index name in elasticsearch through the environment variable elastic_logger_index_name
-elastic_logger_index_name=elastic-logger
+ELASTIC-LOGGER-INDEX-NAME=elastic-logger
 
 # configuring whether elasticsearch authentication is active
-elastic_logger_auth_enable=True
+elkAuthEnable=True
 
 # configuring ElasticSearch Authentication User
-elastic_logger_auth_user=you_user
+elkAuthUser=you_user
 
 # configuring ElasticSearch Authentication Password
-elastic_logger_auth_password=your_pass
+elkAuthPassword=your_pass
 
 # Default values of variables
-elastic_logger_host="http://localhost:9200"
-elastic_logger_index_name=elastic-logger
-elastic_logger_auth_enable=False
-elastic_logger_auth_user=
-elastic_logger_auth_password=
+elkHost="https://localhost:9200"
+ELASTIC-LOGGER-INDEX-NAME=monitor-zabbix-hosts-local
+elkAuthEnable=False
+elkAuthUser=
+elkAuthPassword=
+
 
 NOTE: Under development use python-dotenv .env file
 ```

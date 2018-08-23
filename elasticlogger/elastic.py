@@ -10,10 +10,10 @@ load_dotenv(verbose=False)
 
 
 class Elastic():
-    elastic_logger_host = os.getenv("elastic_logger_host")
-    elastic_logger_auth_enable = bool(os.getenv("elastic_logger_auth_enable"))
-    elastic_logger_auth_user = os.getenv("elastic_logger_auth_user")
-    elastic_logger_auth_password = os.getenv("elastic_logger_auth_password")
+    elastic_logger_host = os.getenv("elkHost")
+    elastic_logger_auth_enable = bool(os.getenv("elkAuthEnable"))
+    elastic_logger_auth_user = os.getenv("elkAuthUser")
+    elastic_logger_auth_password = os.getenv("elkAuthPassword")
 
     def __init__(self, _id, _index_name, _index_name_day):
         self.index_name = _index_name
@@ -29,7 +29,7 @@ class Elastic():
             self.elastic_logger_auth_enable = False
 
         if (self.elastic_logger_auth_enable and self.elastic_logger_auth_user and self.elastic_logger_auth_password):
-            self.es = Elasticsearch(self.elastic_logger_host,
+            self.es = Elasticsearch(hosts=self.elastic_logger_host,
                                     auth=(self.elastic_logger_auth_user, self.elastic_logger_auth_password))
         else:
             self.es = Elasticsearch(self.elastic_logger_host)
