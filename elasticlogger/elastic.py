@@ -11,6 +11,7 @@ load_dotenv(verbose=False)
 
 class Elastic():
     elastic_logger_host = os.getenv("elkHost")
+    elastic_logger_port = os.getenv("elkPort")
     elastic_logger_auth_enable = bool(os.getenv("elkAuthEnable"))
     elastic_logger_auth_user = os.getenv("elkAuthUser")
     elastic_logger_auth_password = os.getenv("elkAuthPassword")
@@ -21,18 +22,21 @@ class Elastic():
         self.id = _id
 
         if (not self.elastic_logger_host):
-            self.elastic_logger_host = ["http://localhost:9200"]
+            self.elastic_logger_host = ["http://localhost"]
         else:
             self.elastic_logger_host = str(self.elastic_logger_host).split(",")
+
+        if (not self.elastic_logger_port):
+            self.elastic_logger_port = 9200
 
         if (not self.elastic_logger_auth_enable):
             self.elastic_logger_auth_enable = False
 
         if (self.elastic_logger_auth_enable and self.elastic_logger_auth_user and self.elastic_logger_auth_password):
-            self.es = Elasticsearch(hosts=self.elastic_logger_host,
+            self.es = Elasticsearch(hosts=self.elastic_logger_host, port=self.elastic_logger_port,
                                     auth=(self.elastic_logger_auth_user, self.elastic_logger_auth_password))
         else:
-            self.es = Elasticsearch(self.elastic_logger_host)
+            self.es = Elasticsearch(hosts=self.elastic_logger_host, port=self.elastic_logger_port)
 
     def post(self, severity, message, args):
         try:

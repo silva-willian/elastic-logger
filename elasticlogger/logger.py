@@ -21,7 +21,7 @@ class Logger():
         self.base_init()
 
     def base_init(self):
-        index_name = os.getenv("elastic_logger_index_name")
+        index_name = os.getenv("elkIndex")
 
         if (not index_name):
             index_name = "elastic-logger"

@@ -17,18 +17,22 @@ class TestLogger(unittest.TestCase):
         index_name = "elastic-logger"
 
     index_name_day = index_name + '-' + '{0:%Y-%m-%d}'.format(datetime.now())
-    elastic_logger_host = os.getenv("elastic_logger_host")
-    elastic_logger_auth_enable = bool(os.getenv("elastic_logger_auth_enable"))
-    elastic_logger_auth_user = os.getenv("elastic_logger_auth_user")
-    elastic_logger_auth_password = os.getenv("elastic_logger_auth_password")
+    elastic_logger_host = os.getenv("elkHost")
+    elastic_logger_port = os.getenv("elkPort")
+    elastic_logger_auth_enable = bool(os.getenv("elkAuthEnable"))
+    elastic_logger_auth_user = os.getenv("elkAuthUser")
+    elastic_logger_auth_password = os.getenv("elkAuthPassword")
 
     if (not elastic_logger_host):
-        elastic_logger_host = ["http://localhost:9200"]
+        elastic_logger_host = ["http://localhost"]
     else:
         elastic_logger_host = str(elastic_logger_host).split(",")
 
     if (not elastic_logger_auth_enable):
         elastic_logger_auth_enable = False
+
+    if (not elastic_logger_port):
+        elastic_logger_port = 9200
 
     list = ["a", "b"]
 
@@ -36,13 +40,12 @@ class TestLogger(unittest.TestCase):
         return str(uuid.uuid1().time)
 
     def get_logger(self, id):
-        es = Elasticsearch(self.elastic_logger_host)
 
         if (self.elastic_logger_auth_enable and self.elastic_logger_auth_user and self.elastic_logger_auth_password):
-            es = Elasticsearch(self.elastic_logger_host,
-                               auth=(self.elastic_logger_auth_user, self.elastic_logger_auth_password))
+            es = Elasticsearch(hosts=self.elastic_logger_host, port=self.elastic_logger_port,
+                                    auth=(self.elastic_logger_auth_user, self.elastic_logger_auth_password))
         else:
-            es = Elasticsearch(self.elastic_logger_host)
+            es = Elasticsearch(hosts=self.elastic_logger_host, port=self.elastic_logger_port)
 
         body = {
             'query': {
